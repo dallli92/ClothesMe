@@ -1,7 +1,8 @@
-package com.dalilandoulsi.clothesme
+package com.dalilandoulsi.clothesme.Controller
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.dalilandoulsi.clothesme.R
 
 class MainActivity : AppCompatActivity() {
 
