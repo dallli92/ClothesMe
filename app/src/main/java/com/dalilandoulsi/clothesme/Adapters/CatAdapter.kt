@@ -10,10 +10,8 @@ import android.widget.TextView
 import com.dalilandoulsi.clothesme.Model.Category
 import com.dalilandoulsi.clothesme.R
 
-class CatAdapter(context: Context, categories: List<Category>) : BaseAdapter() {
+class CatAdapter(val context: Context, val categories: List<Category>) : BaseAdapter() {
 
-    val context = context
-    val categories = categories
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val catView: View
         val holder: ViewHolder
