@@ -9,9 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.dalilandoulsi.clothesme.Model.Category
 import com.dalilandoulsi.clothesme.R
+import com.dalilandoulsi.clothesme.Services.DataService.categories
 import kotlinx.android.synthetic.main.cat_list_item.view.*
 
-class CatRecyAdapter(val context: Context, val categories: List<Category>) :
+class CatRecyAdapter(val context: Context, val categories: List<Category>, val itemClick: (Category) -> Unit) :
     RecyclerView.Adapter<CatRecyAdapter.Holder>() {
 
 
@@ -21,7 +22,7 @@ class CatRecyAdapter(val context: Context, val categories: List<Category>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): Holder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.cat_list_item, parent, false)
-        return Holder(view)
+        return Holder(view,itemClick)
     }
 
     override fun getItemCount(): Int {
@@ -29,7 +30,7 @@ class CatRecyAdapter(val context: Context, val categories: List<Category>) :
     }
 
 
-    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class Holder(itemView: View, val itemClick: (Category) -> Unit) : RecyclerView.ViewHolder(itemView) {
 
         val catImg = itemView?.findViewById<ImageView>(R.id.catImg)
         val catName = itemView?.findViewById<TextView>(R.id.catName)
@@ -37,6 +38,7 @@ class CatRecyAdapter(val context: Context, val categories: List<Category>) :
             val resourceId = context.resources.getIdentifier(category.image, "drawable", context.packageName)
             catImg?.setImageResource(resourceId)
             catName?.text = category.title
+            itemView.setOnClickListener { itemClick(category) }
         }
     }
 }
