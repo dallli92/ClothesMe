@@ -10,10 +10,11 @@ import android.widget.TextView
 import com.dalilandoulsi.clothesme.Model.Product
 import com.dalilandoulsi.clothesme.R
 
-class ProdAdapter(val context: Context, val products: List<Product>) : RecyclerView.Adapter<ProdAdapter.ProdHolder>() {
+class ProdAdapter(val context: Context, val products: List<Product>, val itemClick: (Product) -> Unit) :
+    RecyclerView.Adapter<ProdAdapter.ProdHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProdHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.product_list_item, parent, false)
-        return ProdHolder(view)
+        return ProdHolder(view, itemClick)
     }
 
     override fun getItemCount(): Int {
@@ -26,7 +27,7 @@ class ProdAdapter(val context: Context, val products: List<Product>) : RecyclerV
     }
 
 
-    inner class ProdHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ProdHolder(itemView: View, val itemClick: (Product) -> Unit) : RecyclerView.ViewHolder(itemView) {
 
         val proImg = itemView?.findViewById<ImageView>(R.id.prodImg)
         val proName = itemView?.findViewById<TextView>(R.id.prodName)
@@ -38,6 +39,7 @@ class ProdAdapter(val context: Context, val products: List<Product>) : RecyclerV
             proImg?.setImageResource(resourceId)
             proName?.text = product.title
             proPrice?.text = product.price
+            itemView.setOnClickListener { itemClick(product) }
         }
     }
 }

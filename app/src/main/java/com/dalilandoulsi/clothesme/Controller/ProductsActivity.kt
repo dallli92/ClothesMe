@@ -1,5 +1,6 @@
 package com.dalilandoulsi.clothesme.Controller
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,7 @@ import com.dalilandoulsi.clothesme.Adapters.ProdAdapter
 import com.dalilandoulsi.clothesme.R
 import com.dalilandoulsi.clothesme.Services.DataService
 import com.dalilandoulsi.clothesme.Utilities.EXTRA_CATEGORY
+import com.dalilandoulsi.clothesme.Utilities.EXTRA_PRODUCT
 import kotlinx.android.synthetic.main.activity_products.*
 
 class ProductsActivity : AppCompatActivity() {
@@ -19,7 +21,11 @@ class ProductsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_products)
         val catType = intent.getStringExtra(EXTRA_CATEGORY)
         productText.text = catType
-        prodAdapter = ProdAdapter(this, DataService.getProduct(catType))
+        prodAdapter = ProdAdapter(this, DataService.getProduct(catType)) { product ->
+            val intentTodetails = Intent(this, ProductDetailsActivity::class.java)
+            intentTodetails.putExtra(EXTRA_PRODUCT, product)
+            startActivity(intentTodetails)
+        }
         var spanCount = 2
         val orientation = resources.configuration.orientation
         val screeSize = resources.configuration.screenHeightDp
